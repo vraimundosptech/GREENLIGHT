@@ -153,40 +153,63 @@ INSERT INTO financeiro (idHortalica, custoProducao, precoVenda, dtReferencia) VA
 (4, 280.00, 2.70, '2026-02-01'),
 (5, 450.00, 4.20, '2026-02-01');
 
--- Mostrar todos os registros da tabela hortalica
+SELECT * FROM empresa;
+
+SELECT * FROM empresa
+WHERE UF = 'SP';
+
+SELECT * FROM empresa
+WHERE nome LIKE 'A%';
+
+SELECT * FROM empresa
+WHERE dtCadastro >= '2026-01-01';
+
+SELECT * FROM empresa
+ORDER BY nome ASC;
+
+
+SELECT * FROM estufa;
+
+SELECT * FROM estufa
+WHERE capacidade > 600;
+
+SELECT * FROM estufa
+WHERE capacidade BETWEEN 500 AND 800;
+
+SELECT * FROM estufa
+WHERE nomenclatura LIKE '%A';
+
+SELECT * FROM estufa
+WHERE idEmpresa = 1;
+
+SELECT * FROM estufa
+ORDER BY capacidade DESC;
+
+
 SELECT * FROM hortalica;
 
--- Mostrar todos os registros de luminosidade com valor abaixo de 10000
 SELECT * FROM registroLuminosidade
 WHERE luminosidade < 10000;
 
--- Mostrar todas as produções feitas no mês de janeiro de 2026
 SELECT * FROM producao
-WHERE dataProducao BETWEEN '2026-01-01' AND '2026-01-31';
+WHERE dtProducao BETWEEN '2026-01-01' AND '2026-01-31';
 
--- Mostrar todos os registros financeiros onde o precoVenda é maior que 3.00
 SELECT * FROM financeiro
 WHERE precoVenda > 3.00;
 
--- Mostrar todas as producoes onde a quantidade perdida foi maior que 20 unidades
 SELECT * FROM producao
 WHERE quantidadePerdida > 20;
 
--- Mostrar todos os registros de luminosidade com valor acima de 20000
 SELECT * FROM registroLuminosidade
 WHERE luminosidade > 20000;
 
--- Mostrar todos os usuarios cadastrados
 SELECT * FROM usuario;
 
--- Mostrar todos os registros financeiros ordenados pelo custo de producao descendente (do maior para o menor)
 SELECT * FROM financeiro
 ORDER BY custoProducao DESC;
 
--- Mostrar todas as producoes feitas depois de 2026-02-01
 SELECT * FROM producao
-WHERE dataProducao >= '2026-02-01';
+WHERE dtProducao >= '2026-02-01';
 
--- Mostrar todos os registros financeiros referentes a fevereiro de 2026
 SELECT * FROM financeiro
-WHERE dataReferencia = '2026-02-01';
+WHERE dtReferencia = '2026-02-01';
