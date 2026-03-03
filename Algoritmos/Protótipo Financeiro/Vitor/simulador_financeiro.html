@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Simulador Financeiro</title>
+  </head>
+  <body>
+    Digite área: <input type="text" id="ipt_area_m2" /><br />
+    Digite a densidade: <input type="text" id="ipt_densidade" /><br />
+    Digite a quantidade descartada: <input type="text" id="ipt_perdas" /><br />
+    Digite o preco unitario: <input type="text" id="ipt_preco" /><br />
+    <br />
+    Digite o custo variavel: <input type="text" id="ipt_variavel" /><br />
+    Digite o custo fixo mensal: <input type="text" id="ipt_fixo_mensal" /><br />
+    Digite quantidade de dias do ciclo:
+    <input type="text" id="ipt_dias" /><br />
+    Digite a depreciacao mensal:
+    <input type="text" id="ipt_depreciacao_mensal" /><br />
+
+    <button onclick="calcular()">Calcular</button>
+
+    <div id="div_mensagem"></div>
+  </body>
+  <script>
+    function calcular() {
+      //Receita
+      let area_m2 = Number(ipt_area_m2.value);
+      let densidade = Number(ipt_densidade.value);
+      let perdas = Number(ipt_perdas.value);
+      let preco_venda = Number(ipt_preco.value);
+
+      let unidades_produzidas = area_m2 * densidade;
+
+      let unidades_colhidas = unidades_produzidas - perdas;
+
+      let porcentagem_perdas =
+        100 - (unidades_colhidas * 100) / unidades_produzidas;
+
+      let receita = unidades_colhidas * preco_venda;
+
+      //Custos
+
+      let variavel = Number(ipt_variavel.value);
+      let fixo_mensal = Number(ipt_fixo_mensal.value);
+      let dias = Number(ipt_dias.value);
+      let depreciacao_mensal = Number(ipt_depreciacao_mensal.value);
+
+      dias /= 30;
+
+      let custo_fixo_rateado_ciclo = fixo_mensal * dias;
+
+      let depreciacao_rateada_ciclo = depreciacao_mensal * dias;
+
+      let custo_total =
+        variavel + custo_fixo_rateado_ciclo + depreciacao_rateada_ciclo;
+
+      //Resultado
+
+      let lucro = receita - custo_total;
+
+      let custo_unidade = custo_total / unidades_colhidas;
+
+      let lucro_unidade = preco_venda - custo_unidade;
+
+      //Ponto de equilibrio
+
+      let preco_min = custo_total / unidades_colhidas;
+
+      // unidades para pagar fixos
+
+      let custo_variavel_unidade = variavel / unidades_colhidas;
+
+      let margem_contribuicao = preco_venda - custo_variavel_unidade;
+
+      let unidades_break_even = custo_fixo_rateado_ciclo / margem_contribuicao;
+
+      div_mensagem.innerHTML = `
+Porcentagem de descarte: <b>${porcentagem_perdas.toFixed(0)}%</b><br>`;
+
+      if (lucro > 0) {
+        div_mensagem.innerHTML += `Lucro: <span style="color: green;"><b>R$${lucro.toFixed(2)}</b></span><br>`;
+      } else {
+        if (lucro < 0) {
+          div_mensagem.innerHTML += `Lucro: <span style="color: red;"><b>R$${lucro.toFixed(2)}</b></span><br>`;
+        } else {
+          div_mensagem.innerHTML += `Lucro: <b>R$${lucro.toFixed(2)}</b><br>`;
+        }
+      }
+
+      div_mensagem.innerHTML += `
+Custo por unidade: <b>R$${custo_unidade.toFixed(2)}</b><br>
+Lucro por unidade: <b>R$${lucro_unidade.toFixed(2)}</b><br><br>
+Preco Minimo: <b>R$${preco_min.toFixed(2)}</b><br><br>
+Margem contribuicao: <b>R$${margem_contribuicao.toFixed(2)}</b><br>
+Unidades break even: <b>${unidades_break_even.toFixed(0)}</b>`;
+    }
+  </script>
+</html>
