@@ -95,5 +95,13 @@ Preco Minimo: <b>R$${preco_min.toFixed(2)}</b><br><br>
 Margem contribuicao: <b>R$${margem_contribuicao.toFixed(2)}</b><br>
 Unidades break even: <b>${unidades_break_even.toFixed(0)}</b>`;
     }
+
+    /* Rateada significa dividir um custo entre partes proporcionalmente. 
+      Exemplo: Custo fixo mensal = 1600, mas ciclo do alface é 45 dias 
+      Calculo: custo_rateado = custo_mensal * (dias_ciclo / 30)
+      custo_rateado = 1600 * (45 / 30)
+      custo_rateado = 1600 × 1,5
+      custo_rateado = 2400 
+      Isso significa que, durante 45 dias de produção, o negócio utilizou R$ 2.400 dos custos fixos, mesmo que esses custos sejam registrados mensalmente.*/
   </script>
 </html>
