@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="div_atual">
+        <b><h1>Mês atual (com o sensor)</h1></b>
+        Qual o valor que você gasta para produzir um alface? <input type="text" id="input_valor">
+        <br><br>
+        Quantos alfaces você plantou este mês? <input type="text" id="input_planta">
+        <br><br>
+        Quantos desses alfaces foram perdidos? <input type="text" id="input_perda">
+        <br><br>
+        Por quanto você revende cada alface? <input type="text" id="input_revenda">
+        <br><br>
+        <button onclick="rendaMensal()">Calcular renda</button>
+
+    </div>
+
+    <div id="div_msg"></div>
+</body>
+</html>
+
+<script>
+    function rendaMensal(){
+        let alface = Number(input_valor.value)
+        let plantou = Number(input_planta.value)
+        let perdidos = Number(input_perda.value)
+        let revende = Number(input_revenda.value)
+        let gasto = alface * plantou
+        let venda = plantou - perdidos
+        let lucro = venda * revende
+        let lucroFinal = lucro - gasto
+
+        if(lucroFinal > 0){
+            div_msg.innerHTML = `<br><span style="color: green;">O seu lucro final é: R$${lucroFinal}</span>`
+        }if(lucroFinal < 0){
+            div_msg.innerHTML = `<br><span style="color: red;">O seu lucro final é: R$${lucroFinal}</span>`
+        }if(lucroFinal == 0){
+            div_msg.innerHTML = `<br><span style="color: orange;">O seu lucro final é: R$${lucroFinal}</span>`
+        }
+
+        div_msg.innerHTML += `<br> `
+
+
+        
+    }
+</script>
