@@ -6,26 +6,28 @@
     <title>Simulador Financeiro</title>
   </head>
   <body>
-    Digite área: <input type="text" id="ipt_area_m2" /><br />
-    Digite a densidade: <input type="text" id="ipt_densidade" /><br />
-    Digite o preco unitario: <input type="text" id="ipt_preco" /><br />
+    <h1>Produção</h1>
+    Digite área (m²): <input type="text" id="ipt_area_m2" /><br />
+    Digite a densidade (m²): <input type="text" id="ipt_densidade" /><br />
     Digite a quantidade descartada:
     <input type="text" id="ipt_descarte" /><br />
-    <br />
-    Digite o custo variavel: <input type="text" id="ipt_variavel" /><br />
-    Digite o custo fixo mensal: <input type="text" id="ipt_fixo_mensal" /><br />
     Digite quantidade de dias do ciclo:
     <input type="text" id="ipt_dias" /><br />
-    Digite a depreciacao mensal:
-    <input type="text" id="ipt_depreciacao_mensal" /><br />
 
-    <button onclick="calcular()">Calcular</button>
+    <h1>Financeiro</h1>
+    <h3>Receita</h3>
+    Digite o preco unitário: <input type="text" id="ipt_preco" /><br />
+    <h3>Despesa</h3>
+    Digite o custo variável: <input type="text" id="ipt_variavel" /><br />
+    Digite o custo fixo mensal:
+    <input type="text" id="ipt_fixo_mensal" /><br /><br />
+
+    <button onclick="calcular()"><b>Calcular</b></button>
 
     <div id="div_mensagem"></div>
   </body>
   <script>
     function calcular() {
-
       //CALCULOS SEM O PROJETO
 
       div_mensagem.innerHTML = `<h1>Preços sem o projeto</br>`;
@@ -50,16 +52,12 @@
       let variavel = Number(ipt_variavel.value);
       let fixo_mensal = Number(ipt_fixo_mensal.value);
       let dias = Number(ipt_dias.value);
-      let depreciacao_mensal = Number(ipt_depreciacao_mensal.value);
 
       dias /= 30;
 
       let custo_fixo_rateado_ciclo = fixo_mensal * dias;
 
-      let depreciacao_rateada_ciclo = depreciacao_mensal * dias;
-
-      let custo_total =
-        variavel + custo_fixo_rateado_ciclo + depreciacao_rateada_ciclo;
+      let custo_total = variavel + custo_fixo_rateado_ciclo;
 
       //Resultado
 
@@ -89,14 +87,14 @@
       div_mensagem.innerHTML += `
       Custo por unidade: <b>R$${custo_unidade.toFixed(2)}</b><br>
       Lucro por unidade: <b>R$${lucro_unidade.toFixed(2)}</b><br><br>
-      Preço para gerar lucro: <b>R$${preco_min.toFixed(2)}</b><br><br>`
+      Preço para gerar lucro: <b>R$${preco_min.toFixed(2)}</b><br><br>`;
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////      
+      ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
       //CALCULOS COM O PROJETO
 
       div_mensagem.innerHTML += `<h1>Preços com o projeto</h1><br>`;
-      
+
       //Receita
       let descarte_projeto = descarte * 0.75;
 
@@ -115,8 +113,8 @@
       let lucro_unidade_projeto = preco_venda - custo_unidade_projeto;
 
       let diferenca_lucro = lucro_projeto - lucro;
-      
-      let diferenca_lucro_porcento = diferenca_lucro * 100 / lucro_projeto
+
+      let diferenca_lucro_porcento = (diferenca_lucro * 100) / lucro_projeto;
 
       //Lucro minimo
       let preco_min_projeto = (custo_total / unidades_colhidas_projeto) * 1.3;
@@ -125,7 +123,7 @@
       Porcentagem de descarte: <b>${porcentagem_descarte_projeto.toFixed(0)}%</b><br>`;
 
       if (lucro > 0) {
-        div_mensagem.innerHTML += `Lucro: <span style="color: green;"><b>R$${lucro_projeto.toFixed(2)}</b></span>. Diferença de R$${diferenca_lucro.toFixed(2)}(${diferenca_lucro_porcento.toFixed(0)}%)<br>`;
+        div_mensagem.innerHTML += `Lucro: <span style="color: green;"><b>R$${lucro_projeto.toFixed(2)}</b></span>. Diferença de <b>R$${diferenca_lucro.toFixed(2)}</b>(<b>${diferenca_lucro_porcento.toFixed(0)}%</b>)<br>`;
       } else {
         if (lucro < 0) {
           div_mensagem.innerHTML += `Lucro: <span style="color: red;"><b>R$${lucro_projeto.toFixed(2)}</b></span>. Diferença de R$${diferenca_lucro.toFixed(2)}(${diferenca_lucro_porcento.toFixed(0)}%)<br>`;
@@ -137,8 +135,7 @@
       div_mensagem.innerHTML += `
       Custo por unidade: <b>R$${custo_unidade_projeto.toFixed(2)}</b><br>
       Lucro por unidade: <b>R$${lucro_unidade_projeto.toFixed(2)}</b><br><br>
-      Preço para gerar lucro: <b>R$${preco_min_projeto.toFixed(2)}</b><br><br>`
-
+      Preço para gerar lucro: <b>R$${preco_min_projeto.toFixed(2)}</b><br><br>`;
     }
 
     /* Rateada significa dividir um custo entre partes proporcionalmente. 
