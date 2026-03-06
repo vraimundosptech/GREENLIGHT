@@ -9,7 +9,8 @@
     Digite área: <input type="text" id="ipt_area_m2" /><br />
     Digite a densidade: <input type="text" id="ipt_densidade" /><br />
     Digite o preco unitario: <input type="text" id="ipt_preco" /><br />
-    Digite a quantidade descartada: <input type="text" id="ipt_perdas" /><br />
+    Digite a quantidade descartada:
+    <input type="text" id="ipt_descarte" /><br />
     <br />
     Digite o custo variavel: <input type="text" id="ipt_variavel" /><br />
     Digite o custo fixo mensal: <input type="text" id="ipt_fixo_mensal" /><br />
@@ -24,17 +25,22 @@
   </body>
   <script>
     function calcular() {
+
+      //CALCULOS SEM O PROJETO
+
+      div_mensagem.innerHTML = `<h1>Preços sem o projeto</br>`;
+
       //Receita
       let area_m2 = Number(ipt_area_m2.value);
       let densidade = Number(ipt_densidade.value);
-      let perdas = Number(ipt_perdas.value);
+      let descarte = Number(ipt_descarte.value);
       let preco_venda = Number(ipt_preco.value);
 
       let unidades_produzidas = area_m2 * densidade;
 
-      let unidades_colhidas = unidades_produzidas - perdas;
+      let unidades_colhidas = unidades_produzidas - descarte;
 
-      let porcentagem_perdas =
+      let porcentagem_descarte =
         100 - (unidades_colhidas * 100) / unidades_produzidas;
 
       let receita = unidades_colhidas * preco_venda;
@@ -63,20 +69,12 @@
 
       let lucro_unidade = preco_venda - custo_unidade;
 
-      //Ponto de equilibrio
+      //Lucro minimo
 
       let preco_min = (custo_total / unidades_colhidas) * 1.3;
 
-      // unidades para pagar fixos
-
-      let custo_variavel_unidade = variavel / unidades_colhidas;
-
-      let margem_contribuicao = preco_venda - custo_variavel_unidade;
-
-      let unidades_break_even = custo_fixo_rateado_ciclo / margem_contribuicao;
-
-      div_mensagem.innerHTML = `
-Porcentagem de descarte: <b>${porcentagem_perdas.toFixed(0)}%</b><br>`;
+      div_mensagem.innerHTML += `
+      Porcentagem de descarte: <b>${porcentagem_descarte.toFixed(0)}%</b><br>`;
 
       if (lucro > 0) {
         div_mensagem.innerHTML += `Lucro: <span style="color: green;"><b>R$${lucro.toFixed(2)}</b></span><br>`;
@@ -89,16 +87,59 @@ Porcentagem de descarte: <b>${porcentagem_perdas.toFixed(0)}%</b><br>`;
       }
 
       div_mensagem.innerHTML += `
-Custo por unidade mínimo: <b>R$${custo_unidade.toFixed(2)}</b><br>
-Lucro por unidade: <b>R$${lucro_unidade.toFixed(2)}</b><br><br>
-Preço para gerar lucro: <b>R$${preco_min.toFixed(2)}</b><br><br>
-Margem contribuicao: <b>R$${margem_contribuicao.toFixed(2)}</b><br>
-Unidades break even: <b>${unidades_break_even.toFixed(0)}</b>`;
+      Custo por unidade mínimo: <b>R$${custo_unidade.toFixed(2)}</b><br>
+      Lucro por unidade: <b>R$${lucro_unidade.toFixed(2)}</b><br><br>
+      Preço para gerar lucro: <b>R$${preco_min.toFixed(2)}</b><br><br>`
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////      
+
+      //CALCULOS COM O PROJETO
+
+      div_mensagem.innerHTML += `<h1>Preços com o projeto</h1><br>`;
+      
+      //Receita
+      let descarte_projeto = descarte * 0.75;
+
+      let unidades_colhidas_projeto = unidades_produzidas - descarte_projeto;
+
+      let porcentagem_descarte_projeto =
+        100 - (unidades_colhidas_projeto * 100) / unidades_produzidas;
+
+      let receita_projeto = unidades_colhidas_projeto * preco_venda;
+
+      //Resultado
+      let lucro_projeto = receita_projeto - custo_total;
+
+      let custo_unidade_projeto = custo_total / unidades_colhidas_projeto;
+
+      let lucro_unidade_projeto = preco_venda - custo_unidade_projeto;
+
+      let diferenca_lucro = lucro_projeto - lucro;
+      
+      let diferenca_lucro_porcento = diferenca_lucro * 100 / lucro_projeto
+
+      //Lucro minimo
+      let preco_min_projeto = (custo_total / unidades_colhidas_projeto) * 1.3;
+
+      div_mensagem.innerHTML += `
+      Porcentagem de descarte: <b>${porcentagem_descarte_projeto.toFixed(0)}%</b><br>`;
+
+      if (lucro > 0) {
+        div_mensagem.innerHTML += `Lucro: <span style="color: green;"><b>R$${lucro_projeto.toFixed(2)}</b></span>. Diferença de R$${diferenca_lucro.toFixed(2)}(${diferenca_lucro_porcento.toFixed(0)}%)<br>`;
+      } else {
+        if (lucro < 0) {
+          div_mensagem.innerHTML += `Lucro: <span style="color: red;"><b>R$${lucro_projeto.toFixed(2)}</b></span>. Diferença de R$${diferenca_lucro.toFixed(2)}(${diferenca_lucro_porcento.toFixed(0)}%)<br>`;
+        } else {
+          div_mensagem.innerHTML += `Lucro: <b>R$${lucro_projeto.toFixed(2)}</b>. Diferença de R$${diferenca_lucro.toFixed(2)}(${diferenca_lucro_porcento.toFixed(0)}%)<br>`;
+        }
+      }
+
+      div_mensagem.innerHTML += `
+      Custo por unidade mínimo: <b>R$${custo_unidade_projeto.toFixed(2)}</b><br>
+      Lucro por unidade: <b>R$${lucro_unidade_projeto.toFixed(2)}</b><br><br>
+      Preço para gerar lucro: <b>R$${preco_min_projeto.toFixed(2)}</b><br><br>`
 
     }
-
-
 
     /* Rateada significa dividir um custo entre partes proporcionalmente. 
       Exemplo: Custo fixo mensal = 1600, mas ciclo do alface é 45 dias 
