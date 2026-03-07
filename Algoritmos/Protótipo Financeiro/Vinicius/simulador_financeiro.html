@@ -42,8 +42,7 @@
 
       let unidades_colhidas = unidades_produzidas - descarte;
 
-      let porcentagem_descarte =
-        100 - (unidades_colhidas * 100) / unidades_produzidas;
+      let porcentagem_descarte = 100 - (unidades_colhidas * 100) / unidades_produzidas;
 
       let receita = unidades_colhidas * preco_venda;
 
@@ -72,7 +71,7 @@
       let preco_min = (custo_total / unidades_colhidas) * 1.3;
 
       div_mensagem.innerHTML += `
-      Porcentagem de descarte: <b>${porcentagem_descarte.toFixed(0)}%</b><br>`;
+      Porcentagem de descarte: <b>${porcentagem_descarte.toFixed(2)}%</b><br>`;
 
       if (lucro > 0) {
         div_mensagem.innerHTML += `Lucro: <span style="color: green;"><b>R$${lucro.toFixed(2)}</b></span><br>`;
