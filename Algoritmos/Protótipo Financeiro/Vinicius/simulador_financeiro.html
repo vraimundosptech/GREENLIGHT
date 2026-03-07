@@ -72,7 +72,7 @@
       let preco_min = (custo_total / unidades_colhidas) * 1.3;
 
       div_mensagem.innerHTML += `
-      Porcentagem de descarte: <b>${porcentagem_descarte.toFixed(0)}%</b><br>`;
+      Porcentagem de descarte: <b>${porcentagem_descarte.toFixed(2)}%</b><br>`;
 
       if (lucro > 0) {
         div_mensagem.innerHTML += `Lucro: <span style="color: green;"><b>R$${lucro.toFixed(2)}</b></span><br>`;
@@ -120,15 +120,15 @@
       let preco_min_projeto = (custo_total / unidades_colhidas_projeto) * 1.3;
 
       div_mensagem.innerHTML += `
-      Porcentagem de descarte: <b>${porcentagem_descarte_projeto.toFixed(0)}%</b><br>`;
+      Porcentagem de descarte: <b>${porcentagem_descarte_projeto.toFixed(2)}%</b><br>`;
 
       if (lucro > 0) {
-        div_mensagem.innerHTML += `Lucro: <span style="color: green;"><b>R$${lucro_projeto.toFixed(2)}</b></span>. Diferença de <b>R$${diferenca_lucro.toFixed(2)}</b>(<b>${diferenca_lucro_porcento.toFixed(0)}%</b>)<br>`;
+        div_mensagem.innerHTML += `Lucro: <span style="color: green;"><b>R$${lucro_projeto.toFixed(2)}</b></span>. Diferença de <b>R$${diferenca_lucro.toFixed(2)}</b>(<b>${diferenca_lucro_porcento.toFixed(2)}%</b>)<br>`;
       } else {
         if (lucro < 0) {
-          div_mensagem.innerHTML += `Lucro: <span style="color: red;"><b>R$${lucro_projeto.toFixed(2)}</b></span>. Diferença de R$${diferenca_lucro.toFixed(2)}(${diferenca_lucro_porcento.toFixed(0)}%)<br>`;
+          div_mensagem.innerHTML += `Lucro: <span style="color: red;"><b>R$${lucro_projeto.toFixed(2)}</b></span>. Diferença de R$${diferenca_lucro.toFixed(2)}(${diferenca_lucro_porcento.toFixed(2)}%)<br>`;
         } else {
-          div_mensagem.innerHTML += `Lucro: <b>R$${lucro_projeto.toFixed(2)}</b>. Diferença de R$${diferenca_lucro.toFixed(2)}(${diferenca_lucro_porcento.toFixed(0)}%)<br>`;
+          div_mensagem.innerHTML += `Lucro: <b>R$${lucro_projeto.toFixed(2)}</b>. Diferença de R$${diferenca_lucro.toFixed(2)}(${diferenca_lucro_porcento.toFixed(2)}%)<br>`;
         }
       }
 
