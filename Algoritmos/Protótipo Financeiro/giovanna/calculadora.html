@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>calculadora</title>
+</head>
+<body>
+    <h3>Calculadora Greenlight</h3> <br>
+
+    Gastos na plantação mensal: <input type="text" id="ipt_gasto"> <br>
+
+    Total de alfaces plantados mensalmente: <input type="text" id="ipt_total"> <br>
+  
+    Quantidade de alfaces perdidos no mês: <input type="text" id="ipt_perda"> <br>
+
+    Valor revendido por cada alface: <input type="text" id="ipt_revenda"> <br><br>
+   
+    <button onclick="Lucro()">Lucro operacional Mensal</button>
+    
+    <div id="div_msg"></div>
+
+
+</body>
+</html>
+<script>
+function Lucro() {
+    let gasto = Number(ipt_gasto.value);
+    let totalPlantados = Number(ipt_total.value);
+    let perdidos = Number(ipt_perda.value);
+    let revenda = Number(ipt_revenda.value);
+    let lucro = (totalPlantados - perdidos) * revenda;
+    let retorno = lucro - gasto;
+
+    if ( retorno > 0) {
+       div_msg.innerHTML = `Você teve um lucro de: R$${retorno}`
+   
+    }else{
+        div_msg.innerHTML= `Você <b>NÃO</b> obteve lucro e saiu com prejuízo de: ${retorno} reais`
+
+    }
+
+    if (retorno == 0){
+        div_msg.innerHTML = `Você não obteve lucro, mas não saiu no prejuízo.`
+    }
+
+}
+</script>
+
